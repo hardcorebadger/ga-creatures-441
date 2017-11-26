@@ -41,6 +41,7 @@ public class SimulationController : MonoBehaviour {
 		Population p = populations [c];
 		p.totalLifespan += lifespan;
 		populations [c] = p;
+	}
 
 	public struct Population {
 		public int amount;
