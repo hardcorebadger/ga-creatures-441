@@ -6,6 +6,7 @@ public class Creature : MonoBehaviour {
 
 	public GameObject foodPrefab;
 	public float sensoryRadius = 5f;
+	public float eatRadius = 1f;
 	public float foodEnergy = 30f;
 	public float attackEnergyHit = 30f;
 	public float maxSpeed = 8f;
@@ -31,14 +32,19 @@ public class Creature : MonoBehaviour {
 	public float attack;
 
 	private Brain brain;
+	private bool isInitialized = false;
 
 	// Use this for initialization
-	void Start () {
+	public void Initialize (Chromosome c) {
+		chromosome = c;
 		brain = new Brain (this);
+		isInitialized = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!isInitialized)
+			return;
 		UpdateState ();
 		brain.Think ();
 		Act ();
@@ -46,9 +52,9 @@ public class Creature : MonoBehaviour {
 
 	void Act() {
 		Move (Mathf.Min (maxSpeed, moveX), Mathf.Min (maxSpeed, moveZ));
-		if (Random.Range (0f, 1f) < Mathf.Abs (mouth))
+		if (Random.Range (0f, 1f) < mouth)
 			Eat ();
-		if (Random.Range (0f, 1f) < Mathf.Abs (attack))
+		if (Random.Range (0f, 1f) < attack)
 			Attack ();
 	}
 
@@ -61,6 +67,7 @@ public class Creature : MonoBehaviour {
 		// dies
 		if (energy <= 0f) {
 			Instantiate (foodPrefab, transform.position, Quaternion.identity);
+			FindObjectOfType<SimulationController> ().RegisterDeath (chromosome, score);
 			Destroy (gameObject);
 		}
 
@@ -108,7 +115,7 @@ public class Creature : MonoBehaviour {
 	}
 
 	void Eat() {
-		if (closestFood != null) {
+		if (closestFood != null && Vector3.Distance(transform.position, closestFood.transform.position) < eatRadius) {
 			Destroy (closestFood);
 			energy += attackEnergyHit;
 		}
@@ -116,12 +123,16 @@ public class Creature : MonoBehaviour {
 
 	void Attack() {
 		if (closestCreature != null) {
-			closestCreature.GetComponent<Creature>().energy -= attackEnergyHit;
+			closestCreature.GetComponent<Creature>().energy -= attackEnergyHit * Time.deltaTime;
 		}
 	}
 
 	void Move(float x, float z) {
 		transform.position += new Vector3 (x*Time.deltaTime, 0f, z*Time.deltaTime);
+	}
+
+	public float GetWeight(int i) {
+		return chromosome.weights[i];
 	}
 
 }
