@@ -13,6 +13,7 @@ public class Creature : MonoBehaviour {
 	public GameObject closestCreature;
 	public GameObject closestFood;
 	public float score = 0f;
+	public float timeout = 120f;
 
 	// genetics
 	public Chromosome chromosome;
@@ -39,6 +40,12 @@ public class Creature : MonoBehaviour {
 		chromosome = c;
 		brain = new Brain (this);
 		isInitialized = true;
+		StartCoroutine (Timeout ());
+	}
+
+	private IEnumerator Timeout() {
+		yield return new WaitForSeconds (timeout);
+		energy = -1f;
 	}
 	
 	// Update is called once per frame
