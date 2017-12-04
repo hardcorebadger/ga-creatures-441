@@ -8,6 +8,7 @@ public class SimulationController : MonoBehaviour {
 	public GameObject plantPrefab;
 	public GameObject creaturePrefab;
 
+
 	public int chromosomes = 10;
 	public int populationPerChromosome = 10;
 	public int treeCount = 100;

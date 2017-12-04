@@ -8,7 +8,7 @@ public class Creature : MonoBehaviour {
     public float sensoryRadius = 100f;
 
     public float eatRadius = 1f;
-    public float attackRadius = 4f;
+    public float attackRadius = 3f;
 	public float foodEnergy = 30f;
 	public float attackEnergyHit = 30f;
 	public float maxSpeed = 8f;
@@ -136,8 +136,12 @@ public class Creature : MonoBehaviour {
 	}
 
 	void Attack() {
-		if (closestCreature != null && Vector3.Distance(transform.position, closestCreature.transform.position) < attackRadius)
+        if (closestCreature != null && Vector3.Distance(transform.position, closestCreature.transform.position) < attackRadius)
+        {
             closestCreature.GetComponent<Creature>().energy -= attackEnergyHit * Time.deltaTime;
+        }
+
+
 	}
 
 	void Move(float x, float z) {
