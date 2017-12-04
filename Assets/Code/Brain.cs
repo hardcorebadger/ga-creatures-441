@@ -47,8 +47,6 @@ public class Brain {
 		// set input values
 		creatureX.SetTerminalValue (creature.creatureX);
 		creatureZ.SetTerminalValue (creature.creatureZ);
-        creatureX.SetTerminalValue(creature.foodX); // just make it food
-        creatureZ.SetTerminalValue(creature.foodZ);
 
         foodX.SetTerminalValue (creature.foodX);
 		foodZ.SetTerminalValue (creature.foodZ);
