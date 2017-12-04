@@ -48,6 +48,8 @@ public class Chromosome {
 	private static float Mutate(float f) {
 		// idk
 		return f - 1;
-	}
+        //return Random.Range(initialWeightMin, initialWeightMax);
+
+    }
 
 }

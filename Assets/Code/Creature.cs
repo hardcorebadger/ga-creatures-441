@@ -5,8 +5,10 @@ using UnityEngine;
 public class Creature : MonoBehaviour {
 
 	public GameObject foodPrefab;
-	public float sensoryRadius = 5f;
-	public float eatRadius = 1f;
+    public float sensoryRadius = 20f;
+
+    public float eatRadius = 1f;
+    public float attackRadius = 5f;
 	public float foodEnergy = 30f;
 	public float attackEnergyHit = 30f;
 	public float maxSpeed = 8f;
@@ -29,8 +31,8 @@ public class Creature : MonoBehaviour {
 	// outputs
 	public float moveX;
 	public float moveZ;
-	public float mouth;
-	public float attack;
+    public float mouth;
+    public float attack;
 
 	private Brain brain;
 	private bool isInitialized = false;
@@ -40,6 +42,7 @@ public class Creature : MonoBehaviour {
 		chromosome = c;
 		brain = new Brain (this);
 		isInitialized = true;
+        attack = 0.5f;
 		StartCoroutine (Timeout ());
 	}
 
@@ -59,10 +62,10 @@ public class Creature : MonoBehaviour {
 
 	void Act() {
 		Move (Mathf.Min (maxSpeed, moveX), Mathf.Min (maxSpeed, moveZ));
-		if (Random.Range (0f, 1f) < mouth)
-			Eat ();
-		if (Random.Range (0f, 1f) < attack)
-			Attack ();
+        //if (Random.Range (0f, 1f) < mouth)
+        Eat ();
+		//if (Random.Range (0f, 1f) < attack)
+		Attack ();
 	}
 
 	void UpdateState() {
@@ -129,9 +132,8 @@ public class Creature : MonoBehaviour {
 	}
 
 	void Attack() {
-		if (closestCreature != null) {
-			closestCreature.GetComponent<Creature>().energy -= attackEnergyHit * Time.deltaTime;
-		}
+		if (closestCreature != null && Vector3.Distance(transform.position, closestCreature.transform.position) < attackRadius)
+            closestCreature.GetComponent<Creature>().energy -= attackEnergyHit * Time.deltaTime;
 	}
 
 	void Move(float x, float z) {

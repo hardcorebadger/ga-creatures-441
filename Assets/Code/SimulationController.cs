@@ -15,8 +15,8 @@ public class SimulationController : MonoBehaviour {
 	public float timescale = 1f;
 
 	private Dictionary<Chromosome,Population> populations;
-	private int creaturesLiving = 0;
-	private int runningLoop = 0;
+	public int creaturesLiving = 0;
+	public int runningLoop = 0;
 
 	public void OnEnable() {
 		populations = new Dictionary<Chromosome,Population> ();
@@ -60,7 +60,7 @@ public class SimulationController : MonoBehaviour {
 				GameObject creature = Instantiate(creaturePrefab, new Vector3(Random.Range(size*-1, size), 0f, Random.Range(size*-1, size)), Quaternion.identity);
 				creature.GetComponent<Creature> ().Initialize (c);
 				creaturesLiving++;
-			}
+            }
 		}
 	}
 
@@ -71,7 +71,8 @@ public class SimulationController : MonoBehaviour {
 		Chromosome lastPlace = populations.Keys.First();
 		Chromosome secondLastPlace = populations.Keys.First();
 
-		// get best 2 and worst 2
+        // get best 2 and worst 2a
+        /*
 		foreach (Chromosome c in populations.Keys) {
 			if (populations [c].totalLifespan > populations [firstPlace].totalLifespan) {
 				secondPlace = firstPlace;
@@ -84,15 +85,60 @@ public class SimulationController : MonoBehaviour {
 			} else if (populations [c].totalLifespan < populations [secondLastPlace].totalLifespan)
 				secondLastPlace = c;
 		}
+        */
+        foreach (Chromosome c in populations.Keys)
+        {
+            if (populations[c].totalLifespan < populations[lastPlace].totalLifespan)
+            {
+                lastPlace = c;
+            }
+        } 
+        populations.Remove(lastPlace);
+        lastPlace = populations.Keys.First();
+        foreach (Chromosome c in populations.Keys)
+        {
+            if (populations[c].totalLifespan < populations[lastPlace].totalLifespan)
+            {
+                lastPlace = c;
+            }
+        }
+        populations.Remove(lastPlace); //last place done
 
-		Debug.Log ("Best Chromosome: " + (populations [firstPlace].totalLifespan/populationPerChromosome));
+        float fp = 0;
+        float sp = 0;
+        firstPlace = null;
+        secondPlace = null; 
 
-		// remove the worst 2
-		populations.Remove(lastPlace);
-		populations.Remove(secondLastPlace);
+        foreach (Chromosome c in populations.Keys)
+        {
+            if (populations[c].totalLifespan > fp)
+            {
+                secondPlace = firstPlace;
+                if (secondPlace != null) {
+                    sp = populations[secondPlace].totalLifespan;
+                }
+                firstPlace = c;
+                fp = populations[firstPlace].totalLifespan;
+            }
+            else if (populations[c].totalLifespan > sp)
+            {
+                secondPlace = c;
+                if (secondPlace != null)
+                {
+                    sp = populations[secondPlace].totalLifespan;
+                }
+            }
+        }
 
-		// breed the best 2 twice
-		Chromosome child1 = Chromosome.Breed (firstPlace, secondPlace);
+        Debug.Log("Best Chromosome: " + (populations[firstPlace].totalLifespan / populationPerChromosome));
+        /*
+        Debug.Log(firstPlace == secondPlace);
+        Debug.Log(firstPlace == null);
+        Debug.Log(secondPlace == null);
+        Debug.Log(fp < sp);
+        */
+        
+        Chromosome child1 = Chromosome.Breed (firstPlace, secondPlace);
 		Chromosome child2 = Chromosome.Breed (secondPlace, firstPlace);
 
 		// add the children
