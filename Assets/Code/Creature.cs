@@ -61,9 +61,12 @@ public class Creature : MonoBehaviour {
 	}
 
 	void Act() {
-		Move (Mathf.Min (maxSpeed, moveX), Mathf.Min (maxSpeed, moveZ));
+        //normalize vector to preserve direction
+        Vector3 a = new Vector3 (moveX, 0f, moveZ).normalized;
+        Move(a.x, a.z);
+
         //if (Random.Range (0f, 1f) < mouth)
-        Eat ();
+        Eat();
 		//if (Random.Range (0f, 1f) < attack)
 		Attack ();
 	}
@@ -137,8 +140,9 @@ public class Creature : MonoBehaviour {
 	}
 
 	void Move(float x, float z) {
-		transform.position += new Vector3 (x*Time.deltaTime, 0f, z*Time.deltaTime);
-	}
+        //vector scaled by deltaTime to work at same speed for all cpu speeds
+		transform.position += new Vector3 ((x*Time.deltaTime), 0f, (z*Time.deltaTime));
+    }
 
 	public float GetWeight(int i) {
 		return chromosome.weights[i];

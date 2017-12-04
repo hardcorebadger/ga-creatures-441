@@ -259,7 +259,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1955316282}
-        m_MethodName: RunFast100
+        m_MethodName: Run
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -452,7 +452,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1955316282}
-        m_MethodName: Breed
+        m_MethodName: RunFast100
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1219,10 +1219,10 @@ MonoBehaviour:
     type: 2}
   creaturePrefab: {fileID: 1489571641261284, guid: 24e325b00a70942049cd861a7d666f7e,
     type: 2}
-  chromosomes: 250
-  populationPerChromosome: 1
-  treeCount: 0
-  size: 200
-  timescale: 1
+  chromosomes: 10
+  populationPerChromosome: 10
+  treeCount: 100
+  size: 100
+  timescale: 20
   creaturesLiving: 0
   runningLoop: 0
