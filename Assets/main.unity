@@ -1219,10 +1219,10 @@ MonoBehaviour:
     type: 2}
   creaturePrefab: {fileID: 1489571641261284, guid: 24e325b00a70942049cd861a7d666f7e,
     type: 2}
-  chromosomes: 10
-  populationPerChromosome: 10
-  treeCount: 100
-  size: 100
+  chromosomes: 100
+  populationPerChromosome: 1
+  treeCount: 25
+  size: 25
   timescale: 20
   creaturesLiving: 0
   runningLoop: 0

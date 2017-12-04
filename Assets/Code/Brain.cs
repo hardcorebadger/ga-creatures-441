@@ -59,9 +59,11 @@ public class Brain {
         //h1.ForwardProp(); h2.ForwardProp();
         //moveX.ForwardProp(); moveZ.ForwardProp();
 
-        creature.moveX = creature.maxSpeed * moveX.value;
-		creature.moveZ = creature.maxSpeed * moveZ.value;
-		creature.mouth = (mouth.value + 1f)/2f;
+        //creature.moveX = creature.maxSpeed * moveX.value;
+        //creature.moveZ = creature.maxSpeed * moveZ.value;
+        creature.moveX = moveX.value;
+        creature.moveZ = moveZ.value;
+        creature.mouth = (mouth.value + 1f)/2f;
 		creature.attack = (attack.value + 1f)/2f;
 	}
 

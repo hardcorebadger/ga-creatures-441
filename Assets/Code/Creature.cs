@@ -5,10 +5,10 @@ using UnityEngine;
 public class Creature : MonoBehaviour {
 
 	public GameObject foodPrefab;
-    public float sensoryRadius = 20f;
+    public float sensoryRadius = 100f;
 
     public float eatRadius = 1f;
-    public float attackRadius = 5f;
+    public float attackRadius = 4f;
 	public float foodEnergy = 30f;
 	public float attackEnergyHit = 30f;
 	public float maxSpeed = 8f;
@@ -26,6 +26,7 @@ public class Creature : MonoBehaviour {
 	public float foodX;
 	public float foodZ;
 	public float energy = 120f;
+    public float creatureEnergy;
 	public float random;
 
 	// outputs
